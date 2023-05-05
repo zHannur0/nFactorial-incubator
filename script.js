@@ -16,7 +16,8 @@ function helloPage() {
 
 helloPage();
 function start() {
-
+    audio = document.getElementById("muz");
+    audio.play();
     let eggs = [];
 
     let coordinates = [];
@@ -29,9 +30,7 @@ function start() {
     let second = 0;
     let levels = 1;
 
-    let range = 300;
-
-
+    let range = 400;
 
     document.getElementById("score").innerHTML = "00";
     document.getElementById("minute").innerHTML = "00";
@@ -186,7 +185,7 @@ function start() {
         }else if(second === 35 && minute === 0) {
             levels = 3;
             document.getElementById("level").innerHTML = "Level: 3";
-            range = 100;
+            range = 200;
         }
     }, 1000);
 
