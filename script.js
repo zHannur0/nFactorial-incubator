@@ -3,6 +3,9 @@ let eggs = [];
 
 let coordinates = [];
 
+let eggIndex = -1;
+let currentQueue = 0;
+let score = 0;
 coordinates[0] = [
     document.getElementById("egg17").getBoundingClientRect().top,
     document.getElementById("egg17").getBoundingClientRect().left
@@ -47,7 +50,7 @@ eggs[1] = [
     document.getElementById("egg27")
 ];
 
-eggs[3] = [
+eggs[2] = [
     document.getElementById("egg31"),
     document.getElementById("egg32"),
     document.getElementById("egg33"),
@@ -57,7 +60,7 @@ eggs[3] = [
     document.getElementById("egg37")
 ];
 
-eggs[4] = [
+eggs[3] = [
     document.getElementById("egg41"),
     document.getElementById("egg42"),
     document.getElementById("egg43"),
@@ -68,11 +71,59 @@ eggs[4] = [
 ];
 
 for(let i = 0; i < 4; i++) {
+    for(let k = 0; k < 7; k++) {
+        eggs[i][k].style.display = "none";
+    }
+}
+
+for(let i = 0; i < 4; i++) {
     console.log(coordinates[i][0] + " " + coordinates[i][1]);
 }
 
-document.addEventListener("keypress", (event) => {
-    var name = event.key;
-    var code = event.code;
-    console.log(`Key pressed ${name} \r\n Key code value: ${code}`);
-}, false);
+window.addEventListener("keydown", function(event)
+    {
+        var key = event.key;
+        if(key === 'w') {
+            currX = coordinates[0][0];
+            currY = coordinates[0][1];
+        }else if(key === 's') {
+            currX = coordinates[1][0];
+            currY = coordinates[1][1];
+        }else if(key === 'e') {
+            currX = coordinates[2][0];
+            currY = coordinates[2][1];
+        }else if(key === 'd') {
+            currX = coordinates[3][0];
+            currY = coordinates[3][1];
+        }
+    }
+);
+
+function eggFall(currentQueue) {
+    eggIndex++;
+    if(eggIndex === 0) {
+        eggs[currentQueue][eggIndex].style.display = "block";
+    }else {
+        eggs[currentQueue][eggIndex - 1].style.display = "none";
+        eggs[currentQueue][eggIndex].style.display = "block";
+        if(eggIndex === 6) {
+            if(currX === coordinates[currentQueue][0] && currY === coordinates[currentQueue][1]) {
+                score++;
+            }
+            eggs[currentQueue][eggIndex].style.display = "none";
+            eggIndex = -1;
+        }
+    }
+    console.log(score);
+}
+
+let inter = setInterval(function() {
+    eggFall(currentQueue);
+}, 500);
+
+setInterval(function() {
+    currentQueue = Math.floor(Math.random() * 4);
+    console.log(eggIndex);
+    inter;
+}, 500*7);
+
